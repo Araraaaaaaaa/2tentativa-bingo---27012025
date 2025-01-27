@@ -1,9 +1,9 @@
 import random
 permanencia = True
-Joga1 = [(50,70,80,90),
-         (51,72,82,91)]
-Joga2 = [(53,65,83,92),
-         (50,78,82,95)]
+Joga1 = [[0,0,0,0],
+         [0,0,0,0]]
+Joga2 = [[0,0,0,0],
+         [0,0,0,0]]
 conjunto = []
 ganhadores = 0
 numerosinit = [ 1, 11, 21, 31]
@@ -13,13 +13,12 @@ def cartelas(J1, J2):
     #________________________________________________________Sorteio
     for Indic, List1 in enumerate(J1):
         for Indice, Number in enumerate(List1):
-            if Indice == 0:
-                a = random.randint(numerosinit[Indice], numerosfini[Indice])
-                b = random.randint(numerosinit[Indice], numerosfini[Indice])
-                J1[Indic][Indice] = a
-                J2[Indic][Indice] = b
+            a = random.randint(numerosinit[Indice], numerosfini[Indice])
+            b = random.randint(numerosinit[Indice], numerosfini[Indice])
+            J1[Indic][Indice] = a
+            J2[Indic][Indice] = b
     #_____________________________________________________________________________________Correção 
-    for Indicelin, Linha in enumerate(J1):
+    for Linha in (J1):
         for Indi, Number in enumerate(Linha):
             if J1[0][Indi] == J1[1][Indi]: # verifica se tem algum igual
                 if Indi == 0: # separa pelos parâmetros
@@ -42,7 +41,7 @@ def cartelas(J1, J2):
                         J1[0][Indi] += 2
                     else:
                         J1[1][Indi] -= 2
-    for Indicelin, Linh in enumerate(J2):
+    for Linh in (J2):
         for Ind, Number in enumerate(Linh):
             if J2[0][Ind] == J2[1][Ind]: # verifica se tem algum igual
                 if Ind == 0: # separa pelos parâmetros
@@ -68,23 +67,24 @@ def cartelas(J1, J2):
     return J1, J2 
 
 def Jogin(Homem1, Homem2): 
+    fim = 0
     falta1 = 9
     falta2 = 9
     # _______________________________#
-    print("         Jogador 1")
+    print(" Jogador 1")
     print(f"{Homem1[0][0]}  {Homem1[0][1]}   {Homem1[0][2]}")
     print(f"{Homem1[1][0]}  {Homem1[1][1]}   {Homem1[1][2]}")
-    print(f"{Homem1[2][0]}  {Homem1[2][1]}   {Homem1[2][2]}")
-    print("         Jogador 2")
+    print(" Jogador 2")
     print(f"{Homem2[0][0]}  {Homem2[0][1]}   {Homem2[0][2]}")
     print(f"{Homem2[1][0]}  {Homem2[1][1]}   {Homem2[1][2]}")
-    print(f"{Homem2[2][0]}  {Homem2[2][1]}   {Homem2[2][2]}")
     # _______________________________#
-    while fim == 0:        
+    while fim == 0:
+        fim = 0     
         sorteio = random.randint(1,30)#!
-        for Indica,X in (conjunto):#_________________________________Corrige caso sorteie um número já sorteado
-            while sorteio == X:
-                sorteio = random.randint(1,30)#!
+        # if len(conjunto) > 1 :
+        #     for X in (conjunto):#_________________________________Corrige caso sorteie um número já sorteado
+        #         if sorteio == X:
+        #             sorteio = random.randint(1,30)#!
         conjunto.append(sorteio)
 
         # ______________________________________________________________________________Marca os sorteados
@@ -95,10 +95,11 @@ def Jogin(Homem1, Homem2):
                     falta1 -= 1
         for i,N2 in enumerate(Homem2):
             for v,NN2 in enumerate(N2):
-                if sorteio == NN1:      #se algum número de Homem1 for sorteado
+                if sorteio == NN2:      #se algum número de Homem1 for sorteado
                     Homem2[i][v] = f"<{NN2}>"
                     falta2 -= 1
 
+        set(conjunto) #_____________retira os números repetidos na lista
         print(f"Sorteio = {sorteio}", end='    ')
         print(f"Sorteados = {conjunto}")
         if len(conjunto) > 1 : #_________________________________________________________________________Ajeita a ordem da lista
@@ -112,11 +113,10 @@ def Jogin(Homem1, Homem2):
                         conjunto[endereco] = conjunto[endereco - 1] 
                         conjunto[endereco + 1] = ele
         
-        print("         Jogador 1                                   Jogador 2")
+        print("Jogador 1                  Jogador 2")
         print(f"{Homem1[0][0]}  {Homem1[0][1]}   {Homem1[0][2]}                 {Homem2[0][0]}  {Homem2[0][1]}   {Homem2[0][2]}")
         print(f"{Homem1[1][0]}  {Homem1[1][1]}   {Homem1[1][2]}                 {Homem2[1][0]}  {Homem2[1][1]}   {Homem2[1][2]}")
-        print(f"{Homem1[2][0]}  {Homem1[2][1]}   {Homem1[2][2]}                 {Homem2[2][0]}  {Homem2[2][1]}   {Homem2[2][2]}")
-
+    
         #_____________________________________________________Relação dos ganhadores
         if falta2 == 0 or falta1 == 0:
             fim = 5
@@ -126,6 +126,7 @@ def Jogin(Homem1, Homem2):
                 print("Bingo! Jogador 1 ganhou \o/")
             else:
                 print("Bingo! Jogador 2 ganhou \o/")
+        input("Continue?")
         
 
 
@@ -140,6 +141,7 @@ while permanencia == True:
     print("Rápido = 1   |   Longo  = 2")
     print("Qual o nível de dificuldade?", end=" ")
     D = int(input())
+
     Impar, Par = cartelas(Joga1,Joga2)
     if D == 1:
         Jogin(Impar,Par)
