@@ -1,28 +1,23 @@
 import random
 permanencia = True
-Joga1 = {(50,70,80,90),
-         (51,72,82,91)}
-Joga2 = {(53,65,83,92),
-         (50,78,82,95)}
-conjunto = {}
+Joga1 = [(50,70,80,90),
+         (51,72,82,91)]
+Joga2 = [(53,65,83,92),
+         (50,78,82,95)]
+conjunto = []
 ganhadores = 0
+numerosinit = [ 1, 11, 21, 31]
+numerosfini = [10, 20, 30, 40]
 
 def cartelas(J1, J2):
     #________________________________________________________Sorteio
     for Indic, List1 in enumerate(J1):
         for Indice, Number in enumerate(List1):
             if Indice == 0:
-                J1[Indic][0] = random.randint(1,10)
-                J2[Indic][0] = random.randint(1,10)
-            elif Indice == 1:
-                J1[Indic][1] = random.randint(11,20)
-                J2[Indic][1] = random.randint(11,20)
-            elif Indice == 2:
-                J1[Indic][2] = random.randint(21,30)
-                J2[Indic][2] = random.randint(21,30)
-            elif Indice == 3:
-                J1[Indic][3] = random.randint(31,40)
-                J2[Indic][3] = random.randint(31,40)
+                a = random.randint(numerosinit[Indice], numerosfini[Indice])
+                b = random.randint(numerosinit[Indice], numerosfini[Indice])
+                J1[Indic][Indice] = a
+                J2[Indic][Indice] = b
     #_____________________________________________________________________________________Correção 
     for Indicelin, Linha in enumerate(J1):
         for Indi, Number in enumerate(Linha):
@@ -73,8 +68,8 @@ def cartelas(J1, J2):
     return J1, J2 
 
 def Jogin(Homem1, Homem2): 
-    falta1 = 0
-    falta2 = 0
+    falta1 = 9
+    falta2 = 9
     # _______________________________#
     print("         Jogador 1")
     print(f"{Homem1[0][0]}  {Homem1[0][1]}   {Homem1[0][2]}")
@@ -85,7 +80,7 @@ def Jogin(Homem1, Homem2):
     print(f"{Homem2[1][0]}  {Homem2[1][1]}   {Homem2[1][2]}")
     print(f"{Homem2[2][0]}  {Homem2[2][1]}   {Homem2[2][2]}")
     # _______________________________#
-    while ganhadores == 0:        
+    while fim == 0:        
         sorteio = random.randint(1,30)#!
         for Indica,X in (conjunto):#_________________________________Corrige caso sorteie um número já sorteado
             while sorteio == X:
@@ -97,12 +92,12 @@ def Jogin(Homem1, Homem2):
             for v,NN1 in enumerate(N1):
                 if sorteio == NN1:      #se algum número de Homem1 for sorteado
                     Homem1[i][v] = f"<{NN1}>"
-                    falta1 += 1
+                    falta1 -= 1
         for i,N2 in enumerate(Homem2):
             for v,NN2 in enumerate(N2):
                 if sorteio == NN1:      #se algum número de Homem1 for sorteado
                     Homem2[i][v] = f"<{NN2}>"
-                    falta2 += 1
+                    falta2 -= 1
 
         print(f"Sorteio = {sorteio}", end='    ')
         print(f"Sorteados = {conjunto}")
@@ -121,6 +116,16 @@ def Jogin(Homem1, Homem2):
         print(f"{Homem1[0][0]}  {Homem1[0][1]}   {Homem1[0][2]}                 {Homem2[0][0]}  {Homem2[0][1]}   {Homem2[0][2]}")
         print(f"{Homem1[1][0]}  {Homem1[1][1]}   {Homem1[1][2]}                 {Homem2[1][0]}  {Homem2[1][1]}   {Homem2[1][2]}")
         print(f"{Homem1[2][0]}  {Homem1[2][1]}   {Homem1[2][2]}                 {Homem2[2][0]}  {Homem2[2][1]}   {Homem2[2][2]}")
+
+        #_____________________________________________________Relação dos ganhadores
+        if falta2 == 0 or falta1 == 0:
+            fim = 5
+            if falta1 == 0 and falta2 == 0:
+                print("Bingo! Ambos jogadores ganharam \o/")
+            elif falta1 == 0:
+                print("Bingo! Jogador 1 ganhou \o/")
+            else:
+                print("Bingo! Jogador 2 ganhou \o/")
         
 
 
@@ -132,8 +137,8 @@ def Jogo(dificuldade, Homem1, Homem2):
 # ______________________________________________________________________Código Principal
 
 while permanencia == True:
-    print("Qual o nível de dificuldade?")
     print("Rápido = 1   |   Longo  = 2")
+    print("Qual o nível de dificuldade?", end=" ")
     D = int(input())
     Impar, Par = cartelas(Joga1,Joga2)
     if D == 1:
