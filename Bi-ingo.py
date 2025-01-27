@@ -73,4 +73,32 @@ def cartelas(J1, J2):
                         J2[1][Ind] -= 2
     return J1, J2 
 
+def Jogin(dificuldade, Homem1, Homem2): 
+    while ganhadores == 0:
+    
+        # _______________________________#
+        print("         Jogador 1")
+        print(f"{Homem1[0][0]}  {Homem1[0][1]}   {Homem1[0][2]}")
+        print(f"{Homem1[1][0]}  {Homem1[1][1]}   {Homem1[1][2]}")
+        print(f"{Homem1[2][0]}  {Homem1[2][1]}   {Homem1[2][2]}")
+        # _______________________________#
+        print("         Jogador 2")
+        print(f"{Homem2[0][0]}  {Homem2[0][1]}   {Homem2[0][2]}")
+        print(f"{Homem2[1][0]}  {Homem2[1][1]}   {Homem2[1][2]}")
+        print(f"{Homem2[2][0]}  {Homem2[2][1]}   {Homem2[2][2]}")
+ 
+def Jogo(dificuldade, Homem1, Homem2):
+    print("Hello Word")
+
+# ______________________________________________________________________Código Principal
+
+while permanencia == True:
+    print("Qual o nível de dificuldade?")
+    print("Rápido = 1   |   Longo  = 2")
+    D = int(input())
+    Impar, Par = cartelas(Joga1,Joga2)
+    if D == 1:
+        Jogin(D,Impar,Par)
+    else:
+        Jogo(D,Impar,Par)
 
