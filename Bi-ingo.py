@@ -2,10 +2,9 @@ import random
 permanencia = True
 Joga1 = {(50,70,80,90),
          (51,72,82,91)}
-falta1= 8
 Joga2 = {(53,65,83,92),
          (50,78,82,95)}
-falta2= 8
+conjunto = {}
 ganhadores = 0
 
 def cartelas(J1, J2):
@@ -73,19 +72,59 @@ def cartelas(J1, J2):
                         J2[1][Ind] -= 2
     return J1, J2 
 
-def Jogin(dificuldade, Homem1, Homem2): 
-    while ganhadores == 0:
-    
-        # _______________________________#
-        print("         Jogador 1")
-        print(f"{Homem1[0][0]}  {Homem1[0][1]}   {Homem1[0][2]}")
-        print(f"{Homem1[1][0]}  {Homem1[1][1]}   {Homem1[1][2]}")
-        print(f"{Homem1[2][0]}  {Homem1[2][1]}   {Homem1[2][2]}")
-        # _______________________________#
-        print("         Jogador 2")
-        print(f"{Homem2[0][0]}  {Homem2[0][1]}   {Homem2[0][2]}")
-        print(f"{Homem2[1][0]}  {Homem2[1][1]}   {Homem2[1][2]}")
-        print(f"{Homem2[2][0]}  {Homem2[2][1]}   {Homem2[2][2]}")
+def Jogin(Homem1, Homem2): 
+    falta1 = 0
+    falta2 = 0
+    # _______________________________#
+    print("         Jogador 1")
+    print(f"{Homem1[0][0]}  {Homem1[0][1]}   {Homem1[0][2]}")
+    print(f"{Homem1[1][0]}  {Homem1[1][1]}   {Homem1[1][2]}")
+    print(f"{Homem1[2][0]}  {Homem1[2][1]}   {Homem1[2][2]}")
+    print("         Jogador 2")
+    print(f"{Homem2[0][0]}  {Homem2[0][1]}   {Homem2[0][2]}")
+    print(f"{Homem2[1][0]}  {Homem2[1][1]}   {Homem2[1][2]}")
+    print(f"{Homem2[2][0]}  {Homem2[2][1]}   {Homem2[2][2]}")
+    # _______________________________#
+    while ganhadores == 0:        
+        sorteio = random.randint(1,30)#!
+        for Indica,X in (conjunto):#_________________________________Corrige caso sorteie um número já sorteado
+            while sorteio == X:
+                sorteio = random.randint(1,30)#!
+        conjunto.append(sorteio)
+
+        # ______________________________________________________________________________Marca os sorteados
+        for i,N1 in enumerate(Homem1):
+            for v,NN1 in enumerate(N1):
+                if sorteio == NN1:      #se algum número de Homem1 for sorteado
+                    Homem1[i][v] = f"<{NN1}>"
+                    falta1 += 1
+        for i,N2 in enumerate(Homem2):
+            for v,NN2 in enumerate(N2):
+                if sorteio == NN1:      #se algum número de Homem1 for sorteado
+                    Homem2[i][v] = f"<{NN2}>"
+                    falta2 += 1
+
+        print(f"Sorteio = {sorteio}", end='    ')
+        print(f"Sorteados = {conjunto}")
+        if len(conjunto) > 1 : #_________________________________________________________________________Ajeita a ordem da lista
+            for endereco , ele in enumerate(conjunto):
+                if conjunto[len(conjunto)-1] != conjunto[endereco]: #verifica se é o último elemento.
+                    if conjunto[endereco] > conjunto[endereco + 1]:#se maior que seu sucessor: 
+                        conjunto[endereco] = conjunto[endereco + 1] 
+                        conjunto[endereco + 1] = ele
+                else:
+                    if conjunto[endereco] < conjunto[endereco - 1]:#se menor que seu antecessor: 
+                        conjunto[endereco] = conjunto[endereco - 1] 
+                        conjunto[endereco + 1] = ele
+        
+        print("         Jogador 1                                   Jogador 2")
+        print(f"{Homem1[0][0]}  {Homem1[0][1]}   {Homem1[0][2]}                 {Homem2[0][0]}  {Homem2[0][1]}   {Homem2[0][2]}")
+        print(f"{Homem1[1][0]}  {Homem1[1][1]}   {Homem1[1][2]}                 {Homem2[1][0]}  {Homem2[1][1]}   {Homem2[1][2]}")
+        print(f"{Homem1[2][0]}  {Homem1[2][1]}   {Homem1[2][2]}                 {Homem2[2][0]}  {Homem2[2][1]}   {Homem2[2][2]}")
+        
+
+
+
  
 def Jogo(dificuldade, Homem1, Homem2):
     print("Hello Word")
@@ -98,7 +137,6 @@ while permanencia == True:
     D = int(input())
     Impar, Par = cartelas(Joga1,Joga2)
     if D == 1:
-        Jogin(D,Impar,Par)
+        Jogin(Impar,Par)
     else:
-        Jogo(D,Impar,Par)
-
+        Jogo(Impar,Par)
