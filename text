@@ -1,0 +1,22 @@
+Lembrar: Tuplas são imutáveis.
+
+parte do código trocada por outros motivos:
+    sorteio = random.randint(1,30)#!
+    if len(conjunto) > 1 :
+        for X in (conjunto):#_________________________________Corrige caso sorteie um número já sorteado
+            if sorteio == X: #nao ta corrigindo
+                sorteio = random.randint(1,30)#!
+
+# set(conjunto) #_____________set=retira os números repetidos na lista
+
+parte do código trocada por função:
+if len(conjunto) > 1 : #_________________________________________________________________________Ajeita a ordem da lista
+            for endereco , ele in enumerate(conjunto):
+                if conjunto[len(conjunto)-1] != conjunto[endereco]: #verifica se é o último elemento.
+                    if conjunto[endereco] > conjunto[endereco + 1]:#se maior que seu sucessor: 
+                        conjunto[endereco] = conjunto[endereco + 1] 
+                        conjunto[endereco + 1] = ele
+                else:
+                    if conjunto[endereco] < conjunto[endereco - 1]:#se menor que seu antecessor: 
+                        conjunto[endereco] = conjunto[endereco - 1] 
+                        conjunto[endereco + 1] = ele
